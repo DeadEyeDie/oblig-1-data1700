@@ -18,13 +18,13 @@
             font-weight:bold;
         }
         #antall {
-            width:1.5%;
+            width:2.5%;
         }
     </style>
 
 </head>
 <body>
-<h1>Bestilling av kinobiletter</h1>
+<h1>Bestilling av kinobilletter</h1>
 
 <div class="box1">
     <label for="film">Velg film: </label>
@@ -61,11 +61,13 @@
 </div>
 
 <div class="box2">
-    <button onclick="kjop">Kjøp billett</button>
+    <button onclick="kjop()">Kjøp billett</button>
 </div>
 
 <h2>Alle billetter</h2>
-<button onclick="slettAlle()">Slett alle billettene</button>
+<button onclick="slettAlt()">Slett alle billettene</button>
+
+<ul id="billettListe"></ul>
 
 <script src="app.js"></script>
 
