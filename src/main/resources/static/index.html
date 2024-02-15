@@ -2,10 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kinobiletter</title>
+    <title>Kinobilletter</title>
+    <style>
+
+        .box1{
+            display:block;
+            margin-top:6px;
+            margin-bottom:20px;
+        }
+        .box2 {
+            display:block;
+            margin-top:6px;
+        }
+        label {
+            font-weight:bold;
+        }
+        #antall {
+            width:1.5%;
+        }
+    </style>
+
 </head>
 <body>
 <h1>Bestilling av kinobiletter</h1>
+
+<div class="box1">
+    <label for="film">Velg film: </label>
+    <select name="film" id="film">
+        <option value="">Velg film her</option>
+        <option value="barbie">Barbie</option>
+        <option value="mazerunner">Maze Runner</option>
+        <option value="smurfene">Smurfene</option>
+    </select>
+</div>
+
+<div class="box1">
+    <label for="antall">Antall</label>
+    <input type="number" id="antall" required>
+</div>
+
+<div class="box2">
+    <label for="fornavn">Fornavn</label>
+    <input type="text" id="fornavn" required>
+</div>
+
+<div class="box2">
+    <label for="etternavn">Etternavn</label>
+    <input type="text" id="etternavn" required>
+</div>
+<div class="box2">
+    <label for="telefon">Telefonnr</label>
+    <input type="tel" id="telefon" required>
+</div>
+
+<div class="box2">
+    <label for="epost">Epost</label>
+    <input type="email" id="epost" required>
+</div>
+
+<div class="box2">
+    <button onclick="kjop">Kjøp billett</button>
+</div>
+
+<h2>Alle billetter</h2>
+<button onclick="slettAlle()">Slett alle billettene</button>
+
+<script src="app.js"></script>
 
 </body>
 </html>
