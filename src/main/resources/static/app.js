@@ -19,14 +19,7 @@ function kjop() {
     const telefon = document.getElementById('telefon').value;
     const epost = document.getElementById('epost').value;
 
-
-
-
-//input validering
-
-
-if (film && antall>0 && fornavn && etternavn && validNumber(telefon) && validMail(epost)) {
-    const billett = {
+    const data = {
         film: film,
         antall: antall,
         fornavn: fornavn,
@@ -34,28 +27,64 @@ if (film && antall>0 && fornavn && etternavn && validNumber(telefon) && validMai
         telefon: telefon,
         epost: epost
     };
-    billetter.push(billett);
-    visBilletter();
-    nullstillInput();
-    }else if(antall>0 && fornavn && etternavn && validNumber(telefon) && validMail(epost)){
-    alert('Vennligst velg en film');
 
-    } else if(film && antall<1 && fornavn && etternavn && validNumber(telefon) && validMail(epost)){
-    alert('Antall billetter må være positivt');
+    fetch('/billett/kjop', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Feil ved kjøp av billett');
+            }
+            if (film && antall>0 && fornavn && etternavn && validNumber(telefon) && validMail(epost)) {
+                const billett = {
+                    film: film,
+                    antall: antall,
+                    fornavn: fornavn,
+                    etternavn: etternavn,
+                    telefon: telefon,
+                    epost: epost
+                };
+                billetter.push(billett);
+                visBilletter();
+                nullstillInput();
+            }else if(antall>0 && fornavn && etternavn && validNumber(telefon) && validMail(epost)){
+                alert('Vennligst velg en film');
 
-    } else if(film && antall>0 && !fornavn || !etternavn && validNumber(telefon) && validMail(epost)){
-    alert('Vennligst fyll inn både fornavn og etternavn');
-    } else if(film && antall>0 && fornavn && etternavn && !validNumber(telefon) && validMail(epost)){
-    alert('Vennligst bruk riktig format for telefonnummer. Nummeret må inneholde landskode og det må ligge mellom 6 og 14 sifre\n' +
-        'eksempel: "+1 1234567890"');
-    } else if(film && antall>0 && fornavn && etternavn && validNumber(telefon) && !validMail(epost)){
-    alert('Vennligst brukt riktig format for epost.\n' +
-        'eksempel: "hvaSomHelst@hvasomhelst.minstTotegnfraA-Z"');
-    }else {
-    alert('Du har glemt eller fylt inn feil på 2 eller flere felt, vennligst sjekk at antall er mer enn 0, at du bruker riktig format.\n' +
-        'Format for telefon: "+1 1234567890"\n' +
-        'Format for epost: hvaSomHelst@hvasomhelst.minstTotegnfraA-Z"')
-}
+            } else if(film && antall<1 && fornavn && etternavn && validNumber(telefon) && validMail(epost)){
+                alert('Antall billetter må være positivt');
+
+            } else if(film && antall>0 && !fornavn || !etternavn && validNumber(telefon) && validMail(epost)){
+                alert('Vennligst fyll inn både fornavn og etternavn');
+            } else if(film && antall>0 && fornavn && etternavn && !validNumber(telefon) && validMail(epost)){
+                alert('Vennligst bruk riktig format for telefonnummer. Nummeret må inneholde landskode og det må ligge mellom 6 og 14 sifre\n' +
+                    'eksempel: "+1 1234567890"');
+            } else if(film && antall>0 && fornavn && etternavn && validNumber(telefon) && !validMail(epost)){
+                alert('Vennligst brukt riktig format for epost.\n' +
+                    'eksempel: "hvaSomHelst@hvasomhelst.minstTotegnfraA-Z"');
+            }else {
+                alert('Du har glemt eller fylt inn feil på 2 eller flere felt, vennligst sjekk at antall er mer enn 0, at du bruker riktig format.\n' +
+                    'Format for telefon: "+1 1234567890"\n' +
+                    'Format for epost: hvaSomHelst@hvasomhelst.minstTotegnfraA-Z"')
+            }
+
+            alert('Billett kjøpt vellykket!');
+            slettAlt(); // Tøm skjemaet etter vellykket kjøp
+        })
+        .catch(error => {
+            console.error('Feil ved kjøp av billett:', error);
+            alert('Det oppstod en feil ved kjøp av billett');
+        });
+
+
+
+
+
+
+
 
 }
 function slettAlt() {
